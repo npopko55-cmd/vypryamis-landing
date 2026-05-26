@@ -523,9 +523,26 @@
     background: rgba(255, 255, 255, 0.15);
   }
   .tariff--featured .tariff__features-hl strong { color: #FFFFFF !important; }
-  .tariff__cta { width: 100%; }
-  .tariff__widget { width: 100%; margin-top: auto; }
-  .tariff__widget iframe { max-width: 100%; }
+  .tariff__cta { width: 100%; margin-top: auto; }
+  /* Скрытые хосты widget-ов GetCourse — рендерятся off-screen, контент клонируется в lightbox */
+  .widget-host {
+    position: absolute;
+    left: -10000px;
+    top: 0;
+    width: 480px;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .lightbox__widget {
+    width: min(540px, 100%);
+    background: #FFFFFF;
+    color: var(--c-text);
+    border-radius: var(--r-md);
+    padding: 32px;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  .lightbox__widget * { max-width: 100%; }
   .tariff--featured .btn-primary {
     background: #FFFFFF;
     color: var(--c-primary);
@@ -1232,9 +1249,7 @@
           <li><span>До&nbsp;<strong>3&nbsp;SOS-упражнений</strong> в&nbsp;день</span></li>
           <li><span>Доступ к&nbsp;боту «Выпрямись»</span></li>
         </ul>
-        <div class="tariff__widget" data-metrika-goal="buy-mini">
-          <script id="6154f1575451ec6fa3099f3e564c7960fb760f0d" src="https://my.dimafivex.ru/pl/lite/widget/script?id=1609577"></script>
-        </div>
+        <button type="button" class="btn btn-outline tariff__cta" data-lightbox="tariff" data-tariff="mini" data-metrika-goal="buy-mini">Купить mini</button>
       </div>
 
       <div class="tariff tariff--featured">
@@ -1252,9 +1267,7 @@
           <li><span><strong>Без лимита</strong> на&nbsp;SOS-упражнения в&nbsp;день</span></li>
           <li><span>Доступ к&nbsp;боту «Выпрямись»</span></li>
         </ul>
-        <div class="tariff__widget" data-metrika-goal="buy-max">
-          <script id="4f2a643d68788169c535892037dbea5fbba2d1d0" src="https://my.dimafivex.ru/pl/lite/widget/script?id=1609576"></script>
-        </div>
+        <button type="button" class="btn btn-primary tariff__cta" data-lightbox="tariff" data-tariff="max" data-metrika-goal="buy-max">Купить MAX</button>
       </div>
 
     </div>
@@ -1434,6 +1447,14 @@
 ]
 </script>
 
+<!-- Скрытые хосты для виджетов GetCourse (форма заявки) — рендерятся, потом клонируются в lightbox -->
+<div class="widget-host" id="widget-mini" aria-hidden="true">
+  <script id="6154f1575451ec6fa3099f3e564c7960fb760f0d" src="https://my.dimafivex.ru/pl/lite/widget/script?id=1609577"></script>
+</div>
+<div class="widget-host" id="widget-max" aria-hidden="true">
+  <script id="4f2a643d68788169c535892037dbea5fbba2d1d0" src="https://my.dimafivex.ru/pl/lite/widget/script?id=1609576"></script>
+</div>
+
 <script>
 (function() {
   /* ===== Метрика-цели (если ym уже на странице — повесим один listener) ===== */
@@ -1510,6 +1531,9 @@
         lbMedia.innerHTML = '<video class="lightbox__video" src="' + v + '" controls autoplay playsinline></video>';
       }
       lbNav.hidden = true;
+    } else if (state.mode === 'tariff') {
+      lbMedia.innerHTML = '<div class="lightbox__widget">' + state.items[state.idx] + '</div>';
+      lbNav.hidden = true;
     }
   }
 
@@ -1551,6 +1575,10 @@
       if (n) open('review', ['assets/reviews/review-' + n + '.jpg'], 0);
     } else if (mode === 'video') {
       open('video', ['https://www.youtube.com/embed/ZTWPi5mdIV8?autoplay=1&rel=0&modestbranding=1&playsinline=1'], 0);
+    } else if (mode === 'tariff') {
+      var which = t.dataset.tariff;
+      var host = document.getElementById('widget-' + which);
+      open('tariff', [host ? host.innerHTML : '<p>Виджет не загрузился</p>'], 0);
     }
   });
 
