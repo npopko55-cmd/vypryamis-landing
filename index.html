@@ -178,16 +178,15 @@
     height: 68px;
   }
   .logo {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 4px;
+    display: inline-block;
     font-family: var(--font-display);
     font-weight: 800;
     font-size: 20px;
     letter-spacing: -0.04em;
     color: var(--c-text);
+    white-space: nowrap;
   }
-  .logo__dot { color: var(--c-primary); }
+  .logo__dot { color: var(--c-primary); display: inline-block; margin-left: -0.08em; }
   .header__nav { display: none; gap: 28px; font-size: 15px; font-weight: 400; }
   @media (min-width: 900px) { .header__nav { display: inline-flex; } }
   .header__nav a { color: var(--c-text); transition: color .15s ease; }
@@ -577,20 +576,62 @@
   }
   .reviews__h2 .pill--blue { background: var(--c-primary); }
   .reviews__h2 .pill--green { background: var(--c-success); }
-  .reviews__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
+  .reviews__carousel {
+    position: relative;
   }
-  @media (min-width: 700px)  { .reviews__grid { grid-template-columns: 1fr 1fr; } }
-  @media (min-width: 1100px) { .reviews__grid { grid-template-columns: repeat(3, 1fr); } }
+  .reviews__scroller {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scroll-padding: 20px;
+    padding: 4px 20px 24px;
+    margin: 0 -20px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--c-border) transparent;
+  }
+  .reviews__scroller::-webkit-scrollbar { height: 6px; }
+  .reviews__scroller::-webkit-scrollbar-thumb { background: var(--c-border); border-radius: 3px; }
+  .reviews__scroller::-webkit-scrollbar-track { background: transparent; }
   .review {
+    flex: 0 0 auto;
+    width: min(360px, 85vw);
     background: var(--c-bg-soft);
     border-radius: var(--r-lg);
     padding: 32px 28px;
     display: flex;
     flex-direction: column;
     gap: 20px;
+    scroll-snap-align: start;
+  }
+  .reviews__nav {
+    display: none;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  @media (min-width: 900px) {
+    .reviews__nav { display: flex; }
+  }
+  .reviews__navbtn {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--c-bg-soft);
+    color: var(--c-text);
+    font-size: 22px;
+    line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background .15s ease, color .15s ease, transform .15s ease;
+    border: none;
+    padding: 0;
+  }
+  .reviews__navbtn:disabled { opacity: 0.35; cursor: default; }
+  .reviews__navbtn:active:not(:disabled) { background: var(--c-text); color: var(--c-bg); }
+  @media (hover: hover) {
+    .reviews__navbtn:hover:not(:disabled) { background: var(--c-text); color: var(--c-bg); }
   }
   .review__text { font-size: 15px; line-height: 1.55; flex: 1; color: var(--c-text); }
   .review__link {
@@ -1168,7 +1209,12 @@
         В&nbsp;нашем клубе состоят участники от&nbsp;18&nbsp;до&nbsp;80&nbsp;лет. Это значит, что&nbsp;вы точно найдёте тренировки, подходящие вам.
       </p>
     </div>
-    <div class="reviews__grid">
+    <div class="reviews__nav">
+      <button type="button" class="reviews__navbtn" id="reviewsPrev" aria-label="Назад">‹</button>
+      <button type="button" class="reviews__navbtn" id="reviewsNext" aria-label="Вперёд">›</button>
+    </div>
+    <div class="reviews__carousel">
+    <div class="reviews__scroller" id="reviewsScroller">
       <div class="review">
         <p class="review__text">Я&nbsp;сегодня почувствовала насколько подвижным стал мой грудной отдел: стал легче дышать, держать спину прямо, а&nbsp;плечи расправленными. Очень радуюсь своему результату! Последняя тренировка (на&nbsp;все тело, до&nbsp;сегодняшней) — чистый кайф! Спасибо большое!</p>
         <button type="button" class="review__link" data-lightbox="review">Посмотреть оригинал отзыва</button>
@@ -1205,6 +1251,7 @@
         <p class="review__text">По&nbsp;результату: поясница перестала болеть по&nbsp;утрам и&nbsp;при&nbsp;наклонах вперёд. Болела ягодичная мышца слева, даже ходить было больно — думала, зажат седалищный нерв. Особенно понравился урок для&nbsp;укрепления мышц живота сидя. Всё прошло!</p>
         <button type="button" class="review__link" data-lightbox="review">Посмотреть оригинал отзыва</button>
       </div>
+    </div>
     </div>
   </div>
 </section>
@@ -1431,6 +1478,37 @@
   lbNext.addEventListener('click', function() {
     if (state.idx < state.items.length - 1) { state.idx++; render(); }
   });
+})();
+
+/* ====== Карусель отзывов: prev/next + disable на краях ====== */
+(function() {
+  var scroller = document.getElementById('reviewsScroller');
+  var prev = document.getElementById('reviewsPrev');
+  var next = document.getElementById('reviewsNext');
+  if (!scroller || !prev || !next) return;
+
+  function step() {
+    var first = scroller.querySelector('.review');
+    if (!first) return 360;
+    var gap = parseInt(getComputedStyle(scroller).gap) || 20;
+    return first.getBoundingClientRect().width + gap;
+  }
+
+  function update() {
+    var max = scroller.scrollWidth - scroller.clientWidth - 2;
+    prev.disabled = scroller.scrollLeft <= 2;
+    next.disabled = scroller.scrollLeft >= max;
+  }
+
+  prev.addEventListener('click', function() {
+    scroller.scrollBy({ left: -step(), behavior: 'smooth' });
+  });
+  next.addEventListener('click', function() {
+    scroller.scrollBy({ left: step(), behavior: 'smooth' });
+  });
+  scroller.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
 })();
 </script>
 
