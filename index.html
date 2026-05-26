@@ -243,8 +243,8 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    gap: 16px;
+    justify-content: flex-start;
+    gap: 16px 32px;
   }
   .hero__videocta {
     display: inline-flex;
@@ -277,7 +277,7 @@
     justify-content: center;
     transition: transform .2s ease, background .2s ease;
   }
-  .hero__videocta-play svg { width: 38%; height: 38%; margin-left: 8%; }
+  .hero__videocta-play svg { width: 42%; height: 42%; margin-left: 3px; }
   .hero__videocta:active .hero__videocta-play { transform: scale(0.95); }
   @media (hover: hover) {
     .hero__videocta:hover .hero__videocta-play { background: #D670C5; transform: scale(1.08); }
@@ -1058,7 +1058,7 @@
           <button type="button" class="hero__videocta" data-lightbox="video" aria-label="Посмотреть видео про клуб">
             <span class="hero__videocta-title">Видео про&nbsp;клуб</span>
             <span class="hero__videocta-play">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="7,4 21,12 7,20"/></svg>
+              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4.5 2.5 L13 8 L4.5 13.5 Z"/></svg>
             </span>
           </button>
         </div>
