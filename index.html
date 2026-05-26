@@ -42,7 +42,7 @@
 
   /* ============ RESET ============ */
   *, *::before, *::after { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 80px; }
   body {
     margin: 0;
     font-family: var(--font-body);
@@ -812,7 +812,10 @@
     pointer-events: auto;
     box-shadow: var(--shadow-lg);
   }
-  @media (max-width: 900px) { .sticky-cta { display: flex; } }
+  @media (max-width: 900px) {
+    .sticky-cta { display: flex; }
+    body { padding-bottom: 84px; }
+  }
   /* Прячем sticky когда фиксированный CTA в зоне видимости — управляется JS-классом */
   .sticky-cta.is-hidden { opacity: 0; transform: translateY(20px); pointer-events: none; transition: opacity .25s, transform .25s; }
   .sticky-cta { transition: opacity .25s, transform .25s; }
@@ -1260,7 +1263,8 @@
 <section class="final-cta" id="final-cta">
   <div class="container">
     <h2 class="final-cta__title">
-      Хватит терпеть боль в&nbsp;пояснице и&nbsp;шею в&nbsp;<em>форме гуся</em>.
+      Хватит терпеть боль в&nbsp;пояснице и&nbsp;шею в&nbsp;<em>форме гуся</em>.<br>
+      Помоги спине выпрямиться.
     </h2>
     <a href="#tariffs" class="btn btn-primary btn-arrow" data-metrika-goal="final-cta">
       Выбрать тариф
