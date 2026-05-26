@@ -438,7 +438,7 @@
   }
   .tariff__name { font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: var(--c-text-soft); margin-bottom: 10px; min-height: 18px; }
   .tariff__title { font-family: var(--font-display); font-size: 26px; font-weight: 700; line-height: 1.1; margin-bottom: 8px; min-height: 32px; letter-spacing: -0.02em; }
-  .tariff__duration { font-size: 15px; margin-bottom: 28px; min-height: 22px; color: var(--c-text-soft); }
+  /* .tariff__duration больше не используется — перенесли в первый буллет .tariff__features-hl */
   .tariff__price {
     display: flex;
     align-items: baseline;
@@ -468,6 +468,18 @@
     background-size: 12px;
   }
   .tariff__features li strong { font-weight: 500; color: var(--c-text); }
+  .tariff__features-hl {
+    padding: 12px 14px;
+    margin: 0 -6px 8px;
+    background: rgba(19, 77, 190, 0.08);
+    border-radius: var(--r-md);
+    font-size: 16px;
+  }
+  .tariff__features-hl strong { color: var(--c-primary) !important; font-weight: 700 !important; }
+  .tariff--featured .tariff__features-hl {
+    background: rgba(255, 255, 255, 0.15);
+  }
+  .tariff--featured .tariff__features-hl strong { color: #FFFFFF !important; }
   .tariff__cta { width: 100%; }
   .tariff--featured .btn-primary {
     background: #FFFFFF;
@@ -1216,12 +1228,12 @@
       <div class="tariff">
         <div class="tariff__name">mini</div>
         <h3 class="tariff__title">Антисутулость mini</h3>
-        <p class="tariff__duration">Доступ на&nbsp;1&nbsp;месяц</p>
         <div class="tariff__price">
           <span class="tariff__price-amount">990</span>
           <span class="tariff__price-currency">₽</span>
         </div>
         <ul class="tariff__features">
+          <li class="tariff__features-hl"><span><strong>Доступ на&nbsp;1&nbsp;месяц</strong></span></li>
           <li><span><strong>28&nbsp;ежедневных</strong> комплексов</span></li>
           <li><span><strong>20&nbsp;SOS-упражнений</strong></span></li>
           <li><span>До&nbsp;<strong>3&nbsp;SOS-упражнений</strong> в&nbsp;день</span></li>
@@ -1234,12 +1246,12 @@
         <div class="tariff__badge">Выгоднее на&nbsp;40%</div>
         <div class="tariff__name">max</div>
         <h3 class="tariff__title">Антисутулость MAX</h3>
-        <p class="tariff__duration">Доступ на&nbsp;3&nbsp;месяца</p>
         <div class="tariff__price">
           <span class="tariff__price-amount">1&nbsp;790</span>
           <span class="tariff__price-currency">₽</span>
         </div>
         <ul class="tariff__features">
+          <li class="tariff__features-hl"><span><strong>Доступ на&nbsp;3&nbsp;месяца</strong></span></li>
           <li><span><strong>49&nbsp;ежедневных</strong> комплексов</span></li>
           <li><span><strong>25&nbsp;SOS-упражнений</strong></span></li>
           <li><span><strong>Без лимита</strong> на&nbsp;SOS-упражнения в&nbsp;день</span></li>
