@@ -883,12 +883,14 @@
   .sticky-cta { transition: opacity .25s, transform .25s; }
 
   /* Видео-модал */
-  .lightbox__video {
+  .lightbox__video, .lightbox__iframe {
     width: 100%;
     max-height: 80vh;
+    aspect-ratio: 16 / 9;
     background: #000;
     border-radius: var(--r-md);
     display: block;
+    border: none;
   }
 
   /* ============ LIGHTBOX (сертификаты + отзывы) ============ */
@@ -1501,7 +1503,12 @@
         lbNext.disabled = state.idx === state.items.length - 1;
       }
     } else if (state.mode === 'video') {
-      lbMedia.innerHTML = '<video class="lightbox__video" src="' + state.items[state.idx] + '" controls autoplay playsinline></video>';
+      var v = state.items[state.idx];
+      if (v.indexOf('youtu') >= 0 || v.indexOf('embed/') >= 0) {
+        lbMedia.innerHTML = '<iframe class="lightbox__iframe" src="' + v + '" frameborder="0" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+      } else {
+        lbMedia.innerHTML = '<video class="lightbox__video" src="' + v + '" controls autoplay playsinline></video>';
+      }
       lbNav.hidden = true;
     }
   }
@@ -1543,7 +1550,7 @@
       var n = card ? parseInt(card.dataset.review, 10) : 0;
       if (n) open('review', ['assets/reviews/review-' + n + '.jpg'], 0);
     } else if (mode === 'video') {
-      open('video', ['assets/hero.mp4'], 0);
+      open('video', ['https://www.youtube.com/embed/ZTWPi5mdIV8?autoplay=1&rel=0&modestbranding=1&playsinline=1'], 0);
     }
   });
 
