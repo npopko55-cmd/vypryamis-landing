@@ -1215,39 +1215,39 @@
     </div>
     <div class="reviews__carousel">
     <div class="reviews__scroller" id="reviewsScroller">
-      <div class="review">
+      <div class="review" data-review="1">
         <p class="review__text">Я&nbsp;сегодня почувствовала насколько подвижным стал мой грудной отдел: стал легче дышать, держать спину прямо, а&nbsp;плечи расправленными. Очень радуюсь своему результату! Последняя тренировка (на&nbsp;все тело, до&nbsp;сегодняшней) — чистый кайф! Спасибо большое!</p>
         <button type="button" class="review__link" data-lightbox="review">Посмотреть оригинал отзыва</button>
       </div>
-      <div class="review">
+      <div class="review" data-review="2">
         <p class="review__text">Очень удобно, что&nbsp;можно в&nbsp;обычные ежедневные ритуалы добавлять несколько упражнений. Что-то сделать прямо в&nbsp;постели. Да&nbsp;и&nbsp;вообще заниматься в&nbsp;удобное время дома, не&nbsp;тратя время на&nbsp;поездку и&nbsp;сборы на&nbsp;тренировку. Сегодня в&nbsp;моих утренних процедурах будет что-то новое с&nbsp;мячом.</p>
         <button type="button" class="review__link" data-lightbox="review">Посмотреть оригинал отзыва</button>
       </div>
-      <div class="review">
+      <div class="review" data-review="3">
         <p class="review__text">Вечное напряжение в&nbsp;пояснице, мешавшее жить и&nbsp;удручавшее каждое утро, кажется, отступило. И&nbsp;это только первая неделя! Очень интересно будет узнать мнение невролога после полноценного курса, ибо в&nbsp;пятницу он&nbsp;уже увидел улучшения и&nbsp;приказал жить. А&nbsp;всё благодаря вашим трудам!</p>
         <button type="button" class="review__link" data-lightbox="review">Посмотреть оригинал отзыва</button>
       </div>
-      <div class="review">
+      <div class="review" data-review="4">
         <p class="review__text">Такое приятное тепло именно ТБС, и&nbsp;упражнения приятные и&nbsp;несложные совсем, чего я&nbsp;собственно и&nbsp;пугалась раньше — а&nbsp;вдруг не&nbsp;справлюсь! Благодарю Диму и&nbsp;его команду!</p>
         <button type="button" class="review__link" data-lightbox="review">Посмотреть оригинал отзыва</button>
       </div>
-      <div class="review">
+      <div class="review" data-review="5">
         <p class="review__text">На&nbsp;первом занятии переживала, что&nbsp;такой формат тренировок не&nbsp;совсем мне подходит, т.к.&nbsp;я&nbsp;люблю силовые трени в&nbsp;зале, но&nbsp;дальше мне очень понравилось — комфортная проработка мышц, которые часто не&nbsp;задействуются. И&nbsp;понравилось, что&nbsp;можно расслабленно, не&nbsp;спеша выполнять многое, и&nbsp;элементы самомассажа.</p>
         <button type="button" class="review__link" data-lightbox="review">Посмотреть оригинал отзыва</button>
       </div>
-      <div class="review">
+      <div class="review" data-review="6">
         <p class="review__text">Прекрасные впечатления и&nbsp;ощущения после занятий. Трудно сохранять вытянутость шеи вверх, не&nbsp;стекать вниз при&nbsp;выполнении упражнений. После работы — идеальный формат для&nbsp;самостоятельных занятий дома.</p>
         <button type="button" class="review__link" data-lightbox="review">Посмотреть оригинал отзыва</button>
       </div>
-      <div class="review">
+      <div class="review" data-review="7">
         <p class="review__text">Доброе утро! Вчера сделала первый комплекс вечером — отличный релакс после рабочего сидячего дня. С&nbsp;утра даже ощущаю немного мышцы пресса и&nbsp;ягодичные :)</p>
         <button type="button" class="review__link" data-lightbox="review">Посмотреть оригинал отзыва</button>
       </div>
-      <div class="review">
+      <div class="review" data-review="8">
         <p class="review__text">Мне тоже сначала показалось, что&nbsp;упражнения лёгкие, но&nbsp;по&nbsp;факту это не&nbsp;так. Занимаюсь 3&nbsp;дня — после упражнений появляется испарина на&nbsp;лбу. Это хороший признак того, что&nbsp;ваш комплекс рабочий.</p>
         <button type="button" class="review__link" data-lightbox="review">Посмотреть оригинал отзыва</button>
       </div>
-      <div class="review">
+      <div class="review" data-review="9">
         <p class="review__text">По&nbsp;результату: поясница перестала болеть по&nbsp;утрам и&nbsp;при&nbsp;наклонах вперёд. Болела ягодичная мышца слева, даже ходить было больно — думала, зажат седалищный нерв. Особенно понравился урок для&nbsp;укрепления мышц живота сидя. Всё прошло!</p>
         <button type="button" class="review__link" data-lightbox="review">Посмотреть оригинал отзыва</button>
       </div>
@@ -1406,8 +1406,13 @@
       lbPrev.disabled = state.idx === 0;
       lbNext.disabled = state.idx === state.items.length - 1;
     } else if (state.mode === 'review') {
-      lbMedia.innerHTML = '<div class="lightbox__review"><p>' + state.items[state.idx] + '</p></div>';
-      lbNav.hidden = true;
+      lbMedia.innerHTML = '<img class="lightbox__img" src="' + state.items[state.idx] + '" alt="Отзыв">';
+      lbNav.hidden = state.items.length <= 1;
+      if (state.items.length > 1) {
+        lbCounter.textContent = (state.idx + 1) + ' / ' + state.items.length;
+        lbPrev.disabled = state.idx === 0;
+        lbNext.disabled = state.idx === state.items.length - 1;
+      }
     }
   }
 
@@ -1445,8 +1450,8 @@
       open('certs', certs, 0);
     } else if (mode === 'review') {
       var card = t.closest('.review');
-      var textNode = card ? card.querySelector('.review__text') : null;
-      if (textNode) open('review', [textNode.innerHTML], 0);
+      var n = card ? parseInt(card.dataset.review, 10) : 0;
+      if (n) open('review', ['assets/reviews/review-' + n + '.jpg'], 0);
     }
   });
 
@@ -1454,8 +1459,8 @@
   document.querySelectorAll('.review').forEach(function(card) {
     card.addEventListener('click', function(e) {
       if (e.target.closest('.review__link')) return; // уже обработано выше
-      var textNode = card.querySelector('.review__text');
-      if (textNode) open('review', [textNode.innerHTML], 0);
+      var n = parseInt(card.dataset.review, 10);
+      if (n) open('review', ['assets/reviews/review-' + n + '.jpg'], 0);
     });
   });
 
