@@ -524,25 +524,23 @@
   }
   .tariff--featured .tariff__features-hl strong { color: #FFFFFF !important; }
   .tariff__cta { width: 100%; margin-top: auto; }
-  /* Скрытые хосты widget-ов GetCourse — рендерятся off-screen, контент клонируется в lightbox */
-  .widget-host {
-    position: absolute;
-    left: -10000px;
-    top: 0;
-    width: 480px;
-    visibility: hidden;
-    pointer-events: none;
-  }
   .lightbox__widget {
-    width: min(540px, 100%);
+    width: min(560px, 100%);
     background: #FFFFFF;
     color: var(--c-text);
     border-radius: var(--r-md);
-    padding: 32px;
-    max-height: 80vh;
+    padding: 28px;
+    max-height: 84vh;
     overflow-y: auto;
   }
-  .lightbox__widget * { max-width: 100%; }
+  .lightbox__widget * { max-width: 100%; box-sizing: border-box; }
+  .lightbox__widget input, .lightbox__widget select, .lightbox__widget textarea { width: 100%; }
+  .lightbox__widget-loading {
+    text-align: center;
+    color: var(--c-text-soft);
+    padding: 24px 0;
+    font-size: 14px;
+  }
   .tariff--featured .btn-primary {
     background: #FFFFFF;
     color: var(--c-primary);
@@ -1447,13 +1445,13 @@
 ]
 </script>
 
-<!-- Скрытые хосты для виджетов GetCourse (форма заявки) — рендерятся, потом клонируются в lightbox -->
-<div class="widget-host" id="widget-mini" aria-hidden="true">
-  <script id="6154f1575451ec6fa3099f3e564c7960fb760f0d" src="https://my.dimafivex.ru/pl/lite/widget/script?id=1609577"></script>
-</div>
-<div class="widget-host" id="widget-max" aria-hidden="true">
-  <script id="4f2a643d68788169c535892037dbea5fbba2d1d0" src="https://my.dimafivex.ru/pl/lite/widget/script?id=1609576"></script>
-</div>
+<!-- Конфиг виджетов GetCourse — лениво подгружаются в lightbox при клике -->
+<script id="tariffs-data" type="application/json">
+{
+  "mini": { "id": "6154f1575451ec6fa3099f3e564c7960fb760f0d", "src": "https://my.dimafivex.ru/pl/lite/widget/script?id=1609577" },
+  "max":  { "id": "4f2a643d68788169c535892037dbea5fbba2d1d0", "src": "https://my.dimafivex.ru/pl/lite/widget/script?id=1609576" }
+}
+</script>
 
 <script>
 (function() {
@@ -1497,6 +1495,8 @@
 
   var certs = [];
   try { certs = JSON.parse(document.getElementById('certs-data').textContent); } catch(e) {}
+  var tariffs = {};
+  try { tariffs = JSON.parse(document.getElementById('tariffs-data').textContent); } catch(e) {}
 
   var state = { mode: null, idx: 0, items: [] };
 
@@ -1532,7 +1532,19 @@
       }
       lbNav.hidden = true;
     } else if (state.mode === 'tariff') {
-      lbMedia.innerHTML = '<div class="lightbox__widget">' + state.items[state.idx] + '</div>';
+      var cfg = state.items[state.idx];
+      var wrap = document.createElement('div');
+      wrap.className = 'lightbox__widget';
+      wrap.innerHTML = '<div class="lightbox__widget-loading">Загружаем форму...</div>';
+      lbMedia.innerHTML = '';
+      lbMedia.appendChild(wrap);
+      // Если скрипт уже был загружен ранее (повторное открытие) — берём из кеша через id
+      var s = document.createElement('script');
+      s.id = cfg.id;
+      s.src = cfg.src;
+      s.async = true;
+      // Появится прямо после wrap — но GetCourse-виджет ищет тег script по своему id и рендерится в соседе
+      wrap.appendChild(s);
       lbNav.hidden = true;
     }
   }
@@ -1577,8 +1589,8 @@
       open('video', ['https://www.youtube.com/embed/ZTWPi5mdIV8?autoplay=1&rel=0&modestbranding=1&playsinline=1'], 0);
     } else if (mode === 'tariff') {
       var which = t.dataset.tariff;
-      var host = document.getElementById('widget-' + which);
-      open('tariff', [host ? host.innerHTML : '<p>Виджет не загрузился</p>'], 0);
+      var cfg = tariffs[which];
+      if (cfg) open('tariff', [cfg], 0);
     }
   });
 
