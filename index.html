@@ -241,39 +241,53 @@
   }
   .hero__play-btn {
     position: absolute;
-    left: clamp(16px, 4%, 32px);
-    right: clamp(16px, 4%, 32px);
-    bottom: clamp(16px, 4%, 28px);
-    display: flex;
+    right: clamp(16px, 5%, 36px);
+    bottom: clamp(16px, 5%, 36px);
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
     align-items: center;
-    justify-content: space-between;
-    gap: 16px;
+    column-gap: 4px;
+    row-gap: 0;
     background: none;
     border: none;
     padding: 0;
     cursor: pointer;
     font-family: inherit;
     z-index: 2;
+    filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.35));
   }
-  .hero__play-label {
-    font-family: 'Caveat', cursive;
-    font-weight: 500;
-    font-size: clamp(26px, 3.2vw, 38px);
-    line-height: 1;
-    color: #FFFFFF;
-    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+  .hero__play-title {
+    grid-column: 1;
+    grid-row: 1;
+    width: clamp(120px, 13vw, 170px);
+    height: auto;
+    display: block;
+    align-self: end;
+    margin-bottom: -8px;
+  }
+  .hero__play-arrow {
+    grid-column: 2;
+    grid-row: 1;
+    width: clamp(26px, 2.6vw, 36px);
+    height: auto;
+    display: block;
+    align-self: end;
+    margin-left: -4px;
+    margin-bottom: -6px;
   }
   .hero__play {
-    flex-shrink: 0;
-    width: clamp(56px, 8%, 80px);
-    height: clamp(56px, 8%, 80px);
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: end;
+    width: clamp(72px, 9vw, 100px);
+    height: clamp(72px, 9vw, 100px);
     border-radius: 50%;
     background: var(--c-pink);
     color: #FFFFFF;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 10px 32px rgba(27, 28, 33, 0.3);
     transition: transform .2s ease, background .2s ease;
   }
   .hero__play svg { width: 38%; height: 38%; margin-left: 8%; }
@@ -1059,7 +1073,8 @@
           <source src="assets/hero.mp4" type="video/mp4">
         </video>
         <button type="button" class="hero__play-btn" data-lightbox="video" aria-label="Посмотреть видео о клубе">
-          <span class="hero__play-label">Видео о клубе</span>
+          <img class="hero__play-title" src="assets/video-btn/title.svg" alt="Видео обо мне">
+          <img class="hero__play-arrow" src="assets/video-btn/arrow.svg" alt="">
           <span class="hero__play">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="7,4 21,12 7,20"/></svg>
           </span>
