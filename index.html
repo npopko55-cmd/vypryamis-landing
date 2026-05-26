@@ -583,7 +583,7 @@
     gap: 20px;
   }
   @media (min-width: 700px)  { .reviews__grid { grid-template-columns: 1fr 1fr; } }
-  @media (min-width: 1100px) { .reviews__grid { grid-template-columns: repeat(4, 1fr); } }
+  @media (min-width: 1100px) { .reviews__grid { grid-template-columns: repeat(3, 1fr); } }
   .review {
     background: var(--c-bg-soft);
     border-radius: var(--r-lg);
@@ -822,19 +822,41 @@
   }
   .lightbox__media {
     width: 100%;
-    max-height: 78vh;
     background: var(--c-bg);
     border-radius: var(--r-md);
     overflow: hidden;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
   }
   .lightbox__img {
     max-width: 100%;
-    max-height: 78vh;
+    max-height: 64vh;
     object-fit: contain;
     display: block;
+  }
+  .lightbox__caption {
+    width: 100%;
+    padding: 18px 24px 20px;
+    background: var(--c-bg-soft);
+    color: var(--c-text);
+    text-align: center;
+    border-bottom-left-radius: var(--r-md);
+    border-bottom-right-radius: var(--r-md);
+  }
+  .lightbox__caption-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.2;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  .lightbox__caption-text {
+    font-size: 14px;
+    color: var(--c-text-soft);
+    line-height: 1.4;
   }
   .lightbox__review {
     background: var(--c-bg);
@@ -885,7 +907,7 @@
 <!-- ============ ШАПКА ============ -->
 <header class="header">
   <div class="container header__inner">
-    <a href="#" class="logo">ВЫПРЯМИСЬ<span class="logo__dot">.</span></a>
+    <a href="#" class="logo">ВЫПРЯМИСЬ<span class="logo__dot">!</span></a>
     <nav class="header__nav">
       <a href="#program">Что внутри</a>
       <a href="#changes">Результат</a>
@@ -1160,7 +1182,27 @@
         <button type="button" class="review__link" data-lightbox="review">Посмотреть оригинал отзыва</button>
       </div>
       <div class="review">
-        <p class="review__text">Такое приятное тепло разливается по&nbsp;спине после ваших упражнений — приятные ощущения, которых я&nbsp;и&nbsp;ждала. Боялась, что&nbsp;не&nbsp;справлюсь, но&nbsp;всё получается даже у&nbsp;меня. Огромная благодарность вашей команде!</p>
+        <p class="review__text">Такое приятное тепло именно ТБС, и&nbsp;упражнения приятные и&nbsp;несложные совсем, чего я&nbsp;собственно и&nbsp;пугалась раньше — а&nbsp;вдруг не&nbsp;справлюсь! Благодарю Диму и&nbsp;его команду!</p>
+        <button type="button" class="review__link" data-lightbox="review">Посмотреть оригинал отзыва</button>
+      </div>
+      <div class="review">
+        <p class="review__text">На&nbsp;первом занятии переживала, что&nbsp;такой формат тренировок не&nbsp;совсем мне подходит, т.к.&nbsp;я&nbsp;люблю силовые трени в&nbsp;зале, но&nbsp;дальше мне очень понравилось — комфортная проработка мышц, которые часто не&nbsp;задействуются. И&nbsp;понравилось, что&nbsp;можно расслабленно, не&nbsp;спеша выполнять многое, и&nbsp;элементы самомассажа.</p>
+        <button type="button" class="review__link" data-lightbox="review">Посмотреть оригинал отзыва</button>
+      </div>
+      <div class="review">
+        <p class="review__text">Прекрасные впечатления и&nbsp;ощущения после занятий. Трудно сохранять вытянутость шеи вверх, не&nbsp;стекать вниз при&nbsp;выполнении упражнений. После работы — идеальный формат для&nbsp;самостоятельных занятий дома.</p>
+        <button type="button" class="review__link" data-lightbox="review">Посмотреть оригинал отзыва</button>
+      </div>
+      <div class="review">
+        <p class="review__text">Доброе утро! Вчера сделала первый комплекс вечером — отличный релакс после рабочего сидячего дня. С&nbsp;утра даже ощущаю немного мышцы пресса и&nbsp;ягодичные :)</p>
+        <button type="button" class="review__link" data-lightbox="review">Посмотреть оригинал отзыва</button>
+      </div>
+      <div class="review">
+        <p class="review__text">Мне тоже сначала показалось, что&nbsp;упражнения лёгкие, но&nbsp;по&nbsp;факту это не&nbsp;так. Занимаюсь 3&nbsp;дня — после упражнений появляется испарина на&nbsp;лбу. Это хороший признак того, что&nbsp;ваш комплекс рабочий.</p>
+        <button type="button" class="review__link" data-lightbox="review">Посмотреть оригинал отзыва</button>
+      </div>
+      <div class="review">
+        <p class="review__text">По&nbsp;результату: поясница перестала болеть по&nbsp;утрам и&nbsp;при&nbsp;наклонах вперёд. Болела ягодичная мышца слева, даже ходить было больно — думала, зажат седалищный нерв. Особенно понравился урок для&nbsp;укрепления мышц живота сидя. Всё прошло!</p>
         <button type="button" class="review__link" data-lightbox="review">Посмотреть оригинал отзыва</button>
       </div>
     </div>
@@ -1171,8 +1213,7 @@
 <section class="final-cta" id="final-cta">
   <div class="container">
     <h2 class="final-cta__title">
-      Хватит терпеть боль в&nbsp;шее и&nbsp;жизнь в&nbsp;<em>форме гуся</em>.<br>
-      Помоги спине выпрямиться.
+      Хватит терпеть боль в&nbsp;пояснице и&nbsp;шею в&nbsp;<em>форме гуся</em>.
     </h2>
     <a href="#tariffs" class="btn btn-primary btn-arrow" data-metrika-goal="final-cta">
       Выбрать тариф
@@ -1188,7 +1229,7 @@
     <div class="footer__grid">
 
       <div>
-        <span class="footer__logo">ВЫПРЯМИСЬ<span class="logo__dot">.</span></span>
+        <span class="footer__logo">ВЫПРЯМИСЬ<span class="logo__dot">!</span></span>
         <p class="footer__tagline">Бот с&nbsp;ежедневными комплексами и&nbsp;SOS-упражнениями. Программа от&nbsp;Дмитрия Кириченко — сертифицированного тренера по&nbsp;пилатесу и&nbsp;постуральной гимнастике.</p>
       </div>
 
@@ -1249,11 +1290,11 @@
 <!-- Данные для модалов -->
 <script id="certs-data" type="application/json">
 [
-  "assets/certs/cert-pilates-1.jpg",
-  "assets/certs/cert-pilates-2.jpg",
-  "assets/certs/cert-postural.jpg",
-  "assets/certs/cert-epifanov-doctor.jpg",
-  "assets/certs/cert-poyasnitsa.jpg"
+  { "src": "assets/certs/cert-pilates-1.jpg", "title": "Pilates Academy", "caption": "Pilates Matwork — 1 уровень · сентябрь 2019" },
+  { "src": "assets/certs/cert-pilates-2.jpg", "title": "Pilates Academy", "caption": "Pilates — 2 уровень. Малое оборудование · октябрь 2019" },
+  { "src": "assets/certs/cert-postural.jpg", "title": "Postural Training", "caption": "Certificate of attendance · авторская программа постуральной гимнастики" },
+  { "src": "assets/certs/cert-epifanov-doctor.jpg", "title": "Доктор Епифанов", "caption": "Онлайн-обучение под руководством Антона Епифанова" },
+  { "src": "assets/certs/cert-poyasnitsa.jpg", "title": "Доктор Епифанов · «Поясница»", "caption": "Профильный курс по работе с поясничным отделом" }
 ]
 </script>
 
@@ -1302,9 +1343,17 @@
 
   var state = { mode: null, idx: 0, items: [] };
 
+  function escapeHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
   function render() {
     if (state.mode === 'certs') {
-      lbMedia.innerHTML = '<img class="lightbox__img" src="' + state.items[state.idx] + '" alt="Сертификат">';
+      var item = state.items[state.idx];
+      lbMedia.innerHTML =
+        '<img class="lightbox__img" src="' + item.src + '" alt="' + escapeHtml(item.title || 'Сертификат') + '">' +
+        '<div class="lightbox__caption">' +
+          '<div class="lightbox__caption-title">' + escapeHtml(item.title || '') + '</div>' +
+          '<div class="lightbox__caption-text">' + escapeHtml(item.caption || '') + '</div>' +
+        '</div>';
       lbNav.hidden = state.items.length <= 1;
       lbCounter.textContent = (state.idx + 1) + ' / ' + state.items.length;
       lbPrev.disabled = state.idx === 0;
@@ -1315,11 +1364,18 @@
     }
   }
 
+  /* Компенсация скроллбара: измеряем разницу шириной до и после скрытия overflow */
+  function getScrollbarWidth() {
+    return window.innerWidth - document.documentElement.clientWidth;
+  }
+
   function open(mode, items, idx) {
     state.mode = mode;
     state.items = items;
     state.idx = idx || 0;
     render();
+    var sbw = getScrollbarWidth();
+    if (sbw > 0) document.body.style.paddingRight = sbw + 'px';
     lb.classList.add('is-open');
     lb.setAttribute('aria-hidden', 'false');
     document.body.classList.add('lightbox-open');
@@ -1328,6 +1384,7 @@
     lb.classList.remove('is-open');
     lb.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('lightbox-open');
+    document.body.style.paddingRight = '';
     setTimeout(function() { lbMedia.innerHTML = ''; }, 200);
   }
 
