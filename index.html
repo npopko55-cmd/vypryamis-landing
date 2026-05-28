@@ -239,12 +239,31 @@
     object-fit: cover;
     display: block;
   }
-  .hero__bottom-row {
+  .hero__meta-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px 24px;
+    margin-bottom: 24px;
+  }
+  @media (min-width: 600px) {
+    .hero__meta-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .hero__meta-item {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    justify-content: flex-start;
-    gap: 16px 32px;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.35;
+    color: var(--c-text);
+    font-weight: 500;
+  }
+  .hero__meta-icon {
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: rgba(19, 77, 190, 0.08);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
   }
   .hero__videocta {
     display: inline-flex;
@@ -301,35 +320,37 @@
 
   /* ============ «ПОМОЖЕТ ЕСЛИ» ============ */
   .pains { background: var(--c-bg-soft); }
-  .pains__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
-  @media (min-width: 640px)  { .pains__grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 1000px) { .pains__grid { grid-template-columns: repeat(3, 1fr); } }
-  .pain-card {
-    background: var(--c-bg-card);
-    border-radius: var(--r-lg);
-    padding: 28px;
+  .pains__list {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 760px;
     display: flex;
     flex-direction: column;
+    gap: 0;
+  }
+  .pains__list li {
+    display: flex;
+    align-items: flex-start;
     gap: 14px;
-    transition: transform .2s ease, box-shadow .2s ease;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--c-border);
+    font-size: clamp(16px, 1.6vw, 18px);
+    line-height: 1.45;
+    color: var(--c-text);
   }
-  @media (hover: hover) {
-    .pain-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-  }
-  .pain-card__icon {
-    width: 44px; height: 44px;
-    border-radius: var(--r-md);
-    background: rgba(19, 77, 190, 0.08);
-    color: var(--c-primary);
+  .pains__list li:last-child { border-bottom: none; }
+  .pains__check {
+    flex-shrink: 0;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: rgba(2, 123, 88, 0.12);
+    color: var(--c-success);
     display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
+    font-weight: 600;
+    font-size: 14px;
   }
-  .pain-card__title { font-family: var(--font-display); font-weight: 700; font-size: 18px; line-height: 1.25; letter-spacing: -0.01em; }
-  .pain-card__text { color: var(--c-text-soft); font-size: 15px; line-height: 1.5; }
+  .pains__muted { color: var(--c-text-soft); }
   .pains__bridge {
     margin-top: 48px;
     text-align: center;
@@ -1054,12 +1075,12 @@
   <div class="container">
     <div class="hero__grid">
       <div>
-        <span class="eyebrow hero__eyebrow">Антисутулость 2.0</span>
+        <span class="eyebrow hero__eyebrow">Новинка ⭐</span>
         <h1 class="h1 hero__title">
-          Избавься от сутулости и боли в&nbsp;спине <span class="highlight">за&nbsp;1–3&nbsp;месяца</span> — без&nbsp;зала и&nbsp;часовых растяжек
+          Избавься от сутулости и&nbsp;дискомфорта в&nbsp;спине — <span class="highlight">всего за&nbsp;5&nbsp;минут в&nbsp;день</span>
         </h1>
         <p class="lead hero__lead">
-          Бот с ежедневными комплексами от сутулости + SOS-упражнения, которые помогут снять боль в любое время. Без зала, без оборудования, без ЛФК в поликлинике «для&nbsp;галочки».
+          Быстрые комплексы, которые реально делать каждый день — дома, в&nbsp;офисе и&nbsp;в&nbsp;поездках!
         </p>
         <div class="hero__cta">
           <a href="#tariffs" class="btn btn-primary btn-arrow" data-metrika-goal="hero-cta">
@@ -1067,18 +1088,18 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:-2px"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </a>
         </div>
-        <div class="hero__bottom-row">
-          <div class="hero__meta">
-            <span>📱 Всё в&nbsp;Telegram или&nbsp;VK</span>
-            <span>⏱ 5–15&nbsp;минут в&nbsp;день</span>
-          </div>
-          <button type="button" class="hero__videocta" data-lightbox="video" aria-label="Посмотреть видео про клуб">
-            <span class="hero__videocta-title">Видео про&nbsp;клуб</span>
-            <span class="hero__videocta-play">
-              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4.5 2.5 L13 8 L4.5 13.5 Z"/></svg>
-            </span>
-          </button>
+        <div class="hero__meta-grid">
+          <div class="hero__meta-item"><span class="hero__meta-icon">💬</span>Бот работает в&nbsp;Telegram и&nbsp;VK</div>
+          <div class="hero__meta-item"><span class="hero__meta-icon">⏱</span>Длительность комплексов 5–7&nbsp;минут</div>
+          <div class="hero__meta-item"><span class="hero__meta-icon">🧍</span>Только упражнения стоя и&nbsp;сидя</div>
+          <div class="hero__meta-item"><span class="hero__meta-icon">👔</span>Можно делать даже в&nbsp;офисной одежде</div>
         </div>
+        <button type="button" class="hero__videocta" data-lightbox="video" aria-label="Посмотреть видео про клуб">
+          <span class="hero__videocta-title">Видео про&nbsp;клуб</span>
+          <span class="hero__videocta-play">
+            <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4.5 2.5 L13 8 L4.5 13.5 Z"/></svg>
+          </span>
+        </button>
       </div>
       <div class="hero__visual">
         <video class="hero__video" autoplay loop muted playsinline preload="auto">
@@ -1093,42 +1114,19 @@
 <section class="pains" id="pains">
   <div class="container">
     <div class="section-title">
-      <h2 class="h2">Этот комплекс поможет вам, если&nbsp;вы</h2>
+      <h2 class="h2">Специально для&nbsp;тех, кто много работает сидя и&nbsp;хочет поддержать здоровье спины и&nbsp;суставов</h2>
+      <p class="lead">Всего за&nbsp;5–7&nbsp;минут каждый день:</p>
     </div>
-    <div class="pains__grid">
-      <div class="pain-card">
-        <div class="pain-card__icon">💻</div>
-        <div class="pain-card__title">Ведёте сидячий образ жизни</div>
-        <p class="pain-card__text">Офис, удалёнка, фриланс — всё&nbsp;равно. Тело весь день в&nbsp;одной позе.</p>
-      </div>
-      <div class="pain-card">
-        <div class="pain-card__icon">⏱</div>
-        <div class="pain-card__title">Работаете 7–14&nbsp;часов в&nbsp;день за&nbsp;компьютером</div>
-        <p class="pain-card__text">К&nbsp;вечеру спина каменеет, утром встаёте «как&nbsp;старик».</p>
-      </div>
-      <div class="pain-card">
-        <div class="pain-card__icon">⚡</div>
-        <div class="pain-card__title">Боль отвлекает посреди работы</div>
-        <p class="pain-card__text">Крутите головой, ёрзаете в&nbsp;кресле, тратите деньги на&nbsp;мази.</p>
-      </div>
-      <div class="pain-card">
-        <div class="pain-card__icon">🪞</div>
-        <div class="pain-card__title">Смотрите в&nbsp;зеркало и&nbsp;видите, что&nbsp;горбитесь</div>
-        <p class="pain-card__text">Плечи опущены, голова в&nbsp;позе гуся — это уже&nbsp;замечают и&nbsp;другие.</p>
-      </div>
-      <div class="pain-card">
-        <div class="pain-card__icon">🔁</div>
-        <div class="pain-card__title">Вспоминаете «надо держать осанку», потом&nbsp;опять забываете</div>
-        <p class="pain-card__text">Выпрямляться силой не&nbsp;работает: через 5&nbsp;минут снова сутулитесь.</p>
-      </div>
-      <div class="pain-card">
-        <div class="pain-card__icon">😞</div>
-        <div class="pain-card__title">Не нравится своя осанка</div>
-        <p class="pain-card__text">Портит фигуру, добавляет лет, мешает чувствовать себя уверенно на&nbsp;фото и&nbsp;созвонах.</p>
-      </div>
-    </div>
+    <ul class="pains__list">
+      <li><span class="pains__check">✓</span>Вы&nbsp;будете довольны своей осанкой <span class="pains__muted">(постепенно уйдёт сутулость и&nbsp;холка)</span></li>
+      <li><span class="pains__check">✓</span>Одежда будет лучше сидеть</li>
+      <li><span class="pains__check">✓</span>Уйдёт напряжение в&nbsp;шее, пояснице, между лопаток</li>
+      <li><span class="pains__check">✓</span>Спина не&nbsp;будет уставать к&nbsp;концу дня</li>
+      <li><span class="pains__check">✓</span>Будет меньше отёков</li>
+      <li><span class="pains__check">✓</span>Лицо и&nbsp;шея будут выглядеть моложе</li>
+    </ul>
     <p class="pains__bridge">
-      Это не&nbsp;пройдёт само собой. Без специальных упражнений каждый год сидячей работы делает осанку только&nbsp;хуже.
+      Если ничего не&nbsp;делать, сидячая работа со&nbsp;временем только ухудшает осанку.
     </p>
   </div>
 </section>
@@ -1137,27 +1135,27 @@
 <section class="features" id="program">
   <div class="container">
     <div class="section-title">
-      <span class="eyebrow">Что внутри</span>
-      <h2 class="h2">Мы разработали программу, которая идеально вписывается в&nbsp;жизнь людей с&nbsp;сидячим образом жизни</h2>
+      <span class="eyebrow">Новинка</span>
+      <h2 class="h2">Мы разработали идеальный формат, который впишется в&nbsp;вашу привычную жизнь</h2>
     </div>
     <div class="features__list">
 
       <div class="feature">
-        <div class="feature__icon">🏃</div>
+        <div class="feature__icon">⚡</div>
         <div>
-          <h3 class="feature__title">Ежедневные комплексы по&nbsp;5–15 минут</h3>
+          <h3 class="feature__title">Быстрые комплексы по&nbsp;5–7 минут</h3>
           <p class="feature__text">
-            <strong>Не&nbsp;нужно перестраивать день</strong> — короткая тренировка встраивается между задачами.
+            <strong>Не&nbsp;нужно подстраивать день</strong> — короткая тренировка легко встраивается между делами. Только упражнения стоя и&nbsp;сидя. Без переодеваний. Можно делать в&nbsp;офисе, дома, даже в&nbsp;поездках.
           </p>
         </div>
       </div>
 
       <div class="feature">
-        <div class="feature__icon">🆘</div>
+        <div class="feature__icon">⚡</div>
         <div>
-          <h3 class="feature__title">SOS-упражнения от&nbsp;боли в&nbsp;моменте</h3>
+          <h3 class="feature__title">Набор упражнений «Заряди осанку» за&nbsp;1&nbsp;минуту!</h3>
           <p class="feature__text">
-            Заболела спина посреди дня — жмите кнопку в&nbsp;боте и&nbsp;делайте короткое SOS-упражнение. <strong>Боль уходит, спина размята.</strong> Больше не&nbsp;отвлекает посреди работы.
+            Нажмите кнопку в&nbsp;боте и&nbsp;получите упражнение, чтобы <strong>«зарядить» осанку</strong> и&nbsp;дальше работать с&nbsp;ровной спиной!
           </p>
         </div>
       </div>
@@ -1167,7 +1165,7 @@
         <div>
           <h3 class="feature__title">Бот в&nbsp;любимом мессенджере</h3>
           <p class="feature__text">
-            <strong>Всегда под&nbsp;рукой.</strong> Не&nbsp;нужно никуда далеко заходить, ставить отдельные приложения, искать видео в&nbsp;ютубе. Пара кнопок в&nbsp;Telegram или&nbsp;VK — и&nbsp;нужное упражнение перед глазами.
+            <strong>Всегда под&nbsp;рукой.</strong> Не&nbsp;нужно заходить в&nbsp;GetCourse, ставить отдельные приложения, искать видео в&nbsp;ютубе. Пара кнопок в&nbsp;Telegram или&nbsp;VK — и&nbsp;комплекс перед глазами.
           </p>
         </div>
       </div>
@@ -1175,9 +1173,9 @@
       <div class="feature">
         <div class="feature__icon">🔔</div>
         <div>
-          <h3 class="feature__title">Напоминания</h3>
+          <h3 class="feature__title">Заботливые напоминания</h3>
           <p class="feature__text">
-            Напоминаем регулярно, чтобы вы не&nbsp;откладывали тренировку. А&nbsp;потом — чтобы держали спину под&nbsp;контролем. <strong>У&nbsp;вас просто не&nbsp;остаётся возможности «забить»</strong> на&nbsp;занятия.
+            Напоминаем каждый день, чтобы вы не&nbsp;забыли про тренировку. А&nbsp;потом — чтобы держали спину под&nbsp;контролем. <strong>У&nbsp;вас просто не&nbsp;остаётся возможности «забить»</strong> на&nbsp;занятия.
           </p>
         </div>
       </div>
@@ -1191,19 +1189,17 @@
   <div class="container">
     <div class="section-title">
       <span class="eyebrow">Результат</span>
-      <h2 class="h2">Что изменится через 1–3&nbsp;месяца</h2>
+      <h2 class="h2">Что отмечают пользователи спустя 1&nbsp;неделю использования бота</h2>
     </div>
     <ul class="changes__list">
-      <li class="change-item"><span class="change-item__check">✓</span>Спина не&nbsp;болит — ни&nbsp;днём, ни&nbsp;вечером</li>
-      <li class="change-item"><span class="change-item__check">✓</span>Держу осанку на&nbsp;автомате, без&nbsp;усилия</li>
-      <li class="change-item"><span class="change-item__check">✓</span>Перестаёт хрустеть и&nbsp;щёлкать шея</li>
-      <li class="change-item"><span class="change-item__check">✓</span>Уходит онемение пальцев и&nbsp;туннельный синдром</li>
-      <li class="change-item"><span class="change-item__check">✓</span>Уходят головные боли — большая часть от&nbsp;зажатой шеи</li>
-      <li class="change-item"><span class="change-item__check">✓</span>Дышу свободно — грудная клетка раскрывается</li>
+      <li class="change-item"><span class="change-item__check">✓</span>Осанка дольше держится ровной уже на&nbsp;автомате, без&nbsp;усилий</li>
+      <li class="change-item"><span class="change-item__check">✓</span>Поясница меньше устаёт к&nbsp;концу дня</li>
+      <li class="change-item"><span class="change-item__check">✓</span>Шея не&nbsp;клинит и&nbsp;голова поворачивается лучше</li>
+      <li class="change-item"><span class="change-item__check">✓</span>Уходит ощущение тяжёлой головы</li>
+      <li class="change-item"><span class="change-item__check">✓</span>Грудная клетка и&nbsp;плечи раскрылись, дышать легче</li>
       <li class="change-item"><span class="change-item__check">✓</span>Лучше думаю и&nbsp;держу концентрацию весь день</li>
-      <li class="change-item"><span class="change-item__check">✓</span>Уверенность растёт сама — прямая поза снижает уровень кортизола</li>
-      <li class="change-item"><span class="change-item__check">✓</span>На фото и&nbsp;созвонах выгляжу моложе</li>
-      <li class="change-item"><span class="change-item__check">✓</span>Меньше устаю — тело не&nbsp;тратит ресурс на&nbsp;компенсацию плохой позы</li>
+      <li class="change-item"><span class="change-item__check">✓</span>На&nbsp;фото и&nbsp;созвонах выгляжу моложе</li>
+      <li class="change-item"><span class="change-item__check">✓</span>Вытянулась, как&nbsp;будто рост увеличился на&nbsp;пару&nbsp;см</li>
     </ul>
 
     <!-- Фото до/после с сайта club.dimafivex.ru — абсолютные URL Tilda CDN -->
@@ -1230,6 +1226,7 @@
     <div class="section-title">
       <span class="eyebrow">Тарифы</span>
       <h2 class="h2">Выберите удобный формат и&nbsp;поменяйте качество своей жизни</h2>
+      <p class="lead">Попробуйте формат быстрых тренировок — и&nbsp;почувствуйте, как меняется ваше состояние и&nbsp;энергия&nbsp;⚡</p>
     </div>
     <div class="tariffs__grid">
 
@@ -1242,10 +1239,10 @@
         </div>
         <ul class="tariff__features">
           <li class="tariff__features-hl"><span><strong>Доступ на&nbsp;1&nbsp;месяц</strong></span></li>
-          <li><span><strong>28&nbsp;ежедневных</strong> комплексов</span></li>
-          <li><span><strong>20&nbsp;SOS-упражнений</strong></span></li>
-          <li><span>До&nbsp;<strong>3&nbsp;SOS-упражнений</strong> в&nbsp;день</span></li>
-          <li><span>Доступ к&nbsp;боту «Выпрямись»</span></li>
+          <li><span>Комплексы присылаем каждый день</span></li>
+          <li><span>Набор из&nbsp;<strong>28&nbsp;комплексов</strong> на&nbsp;5–7&nbsp;минут</span></li>
+          <li><span>Набор «Заряди осанку» — <strong>20&nbsp;упражнений</strong></span></li>
+          <li><span>Ежедневные напоминания в&nbsp;удобное время</span></li>
         </ul>
         <button type="button" class="btn btn-outline tariff__cta" data-lightbox="tariff" data-tariff="mini" data-metrika-goal="buy-mini">Купить mini</button>
       </div>
@@ -1260,10 +1257,10 @@
         </div>
         <ul class="tariff__features">
           <li class="tariff__features-hl"><span><strong>Доступ на&nbsp;3&nbsp;месяца</strong></span></li>
-          <li><span><strong>49&nbsp;ежедневных</strong> комплексов</span></li>
-          <li><span><strong>25&nbsp;SOS-упражнений</strong></span></li>
-          <li><span><strong>Без лимита</strong> на&nbsp;SOS-упражнения в&nbsp;день</span></li>
-          <li><span>Доступ к&nbsp;боту «Выпрямись»</span></li>
+          <li><span>Комплексы присылаем каждый день</span></li>
+          <li><span>Набор из&nbsp;<strong>49&nbsp;комплексов</strong> на&nbsp;5–7&nbsp;минут</span></li>
+          <li><span>Набор «Заряди осанку» — <strong>25&nbsp;упражнений</strong></span></li>
+          <li><span>Ежедневные напоминания в&nbsp;удобное время</span></li>
         </ul>
         <button type="button" class="btn btn-primary tariff__cta" data-lightbox="tariff" data-tariff="max" data-metrika-goal="buy-max">Купить MAX</button>
       </div>
@@ -1359,8 +1356,8 @@
 <section class="final-cta" id="final-cta">
   <div class="container">
     <h2 class="final-cta__title">
-      Хватит терпеть боль в&nbsp;пояснице и&nbsp;шею в&nbsp;<em>форме гуся</em>.<br>
-      Помоги спине <span class="final-cta__caps">ВЫПРЯМИТЬСЯ<span class="final-cta__bang">!</span></span>
+      Делайте комплексы по&nbsp;<em>5&nbsp;минут</em> в&nbsp;день и&nbsp;занимайтесь своими делами.<br>
+      Красивая осанка и&nbsp;лёгкость в&nbsp;спине — это&nbsp;легко!
     </h2>
     <a href="#tariffs" class="btn btn-primary btn-arrow" data-metrika-goal="final-cta">
       Выбрать тариф
