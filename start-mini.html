@@ -232,5 +232,27 @@
       </div>
     </div>
   </div>
+<script>
+/* UTM-проброс: метки из URL или из localStorage (пережили redirect GetCourse) → в salebot-ссылки */
+(function() {
+  var KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term',
+              'yclid','gclid','ymclid','fbclid','ysclid','_openstat','roistat','sb_id','ref'];
+  var params = new URLSearchParams(location.search);
+  var utm = {};
+  KEYS.forEach(function(k){ var v = params.get(k); if (v) utm[k] = v; });
+  if (!Object.keys(utm).length) {
+    try { var s = localStorage.getItem('vp_utm'); if (s) utm = JSON.parse(s) || {}; } catch(e) {}
+  } else {
+    try { localStorage.setItem('vp_utm', JSON.stringify(utm)); } catch(e) {}
+  }
+  var qs = Object.keys(utm).map(function(k){
+    return encodeURIComponent(k) + '=' + encodeURIComponent(utm[k]);
+  }).join('&');
+  if (!qs) return;
+  document.querySelectorAll('a[href*="salebot.pro"]').forEach(function(a){
+    a.href = a.href + (a.href.indexOf('?') >= 0 ? '&' : '?') + qs;
+  });
+})();
+</script>
 </body>
 </html>

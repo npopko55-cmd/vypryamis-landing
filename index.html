@@ -1470,6 +1470,47 @@
 </script>
 
 <script>
+/* ===== UTM-проброс: ловим метки, храним, клеим к salebot/GetCourse ===== */
+(function() {
+  var KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term',
+              'yclid','gclid','ymclid','fbclid','ysclid','_openstat','roistat','sb_id','ref'];
+  var STORE = 'vp_utm';
+  var params = new URLSearchParams(location.search);
+  var utm = {};
+  KEYS.forEach(function(k){ var v = params.get(k); if (v) utm[k] = v; });
+
+  // если в URL нет — берём сохранённые ранее (первый источник)
+  if (!Object.keys(utm).length) {
+    try { var s = localStorage.getItem(STORE); if (s) utm = JSON.parse(s) || {}; } catch(e) {}
+  } else {
+    try { localStorage.setItem(STORE, JSON.stringify(utm)); } catch(e) {}
+    // дублируем в cookie (год) — чтобы GetCourse-виджет подхватил источник
+    try {
+      var exp = new Date(Date.now() + 31536000000).toUTCString();
+      for (var k in utm) document.cookie = k + '=' + encodeURIComponent(utm[k]) + ';path=/;expires=' + exp;
+    } catch(e) {}
+  }
+  window.__VP_UTM = utm;
+
+  window.__vpAppendUtm = function(url) {
+    var qs = Object.keys(utm).map(function(k){
+      return encodeURIComponent(k) + '=' + encodeURIComponent(utm[k]);
+    }).join('&');
+    if (!qs) return url;
+    return url + (url.indexOf('?') >= 0 ? '&' : '?') + qs;
+  };
+
+  function applyToLinks() {
+    document.querySelectorAll('a[href*="salebot.pro"], a[href*="dimafivex.ru"]').forEach(function(a){
+      if (a.dataset.utmDone) return;
+      a.href = window.__vpAppendUtm(a.href);
+      a.dataset.utmDone = '1';
+    });
+  }
+  if (document.readyState !== 'loading') applyToLinks();
+  else document.addEventListener('DOMContentLoaded', applyToLinks);
+})();
+
 (function() {
   /* ===== Метрика-цели (если ym уже на странице — повесим один listener) ===== */
   document.addEventListener('click', function(e) {
